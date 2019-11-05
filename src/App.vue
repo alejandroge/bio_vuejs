@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <v-app-bar app :dark="darkMode">
-      <v-toolbar-title class="headline text-uppercase">
+      <v-spacer></v-spacer>
+      <v-toolbar-title centered class="headline text-uppercase">
         <span>Alejandro Guevara</span>
         <span class="ml-5 font-weight-light">Web Developer</span>
       </v-toolbar-title>
@@ -14,7 +15,7 @@
       <template v-slot:extension>
         <v-tabs
           v-model="tab"
-          right
+          centered
           >
           <v-tab
             v-for="item in items"
