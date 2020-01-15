@@ -29,13 +29,15 @@
 
     <v-content>
       <v-tabs-items v-model="tab">
-        <v-tab-item
-          v-for="item in items"
-          :key="item"
-          >
-          <v-card flat>
-            <v-card-text>{{ text }}</v-card-text>
-          </v-card>
+        <v-tab-item>
+          <Resume
+            :darkMode="darkMode"/>
+        </v-tab-item>
+        <v-tab-item>
+          <Resume/>
+        </v-tab-item>
+        <v-tab-item>
+          <Resume/>
         </v-tab-item>
       </v-tabs-items>
     </v-content>
@@ -43,13 +45,17 @@
 </template>
 
 <script>
+import Resume from './components/Resume.vue'
+
 export default {
   name: 'App',
+  components: {
+    Resume,
+  },
   data: () => ({
     darkMode: false,
     tab: null,
     items: ['Me', 'Portfolio', 'Blog'],
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   }),
 };
 </script>
