@@ -55,7 +55,7 @@ export default {
   data: () => ({
     darkMode: false,
     tab: null,
-    items: ['Me', 'Portfolio', 'Blog'],
+    items: ['Portfolio', 'Resume', 'Blog'],
   }),
 };
 </script>
