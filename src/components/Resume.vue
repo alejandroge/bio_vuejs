@@ -9,7 +9,7 @@ export default {
   name: 'Resume',
   props: {
     darkMode: {
-      type: boolean,
+      type: Boolean,
       default: () => false,
     }
   }
