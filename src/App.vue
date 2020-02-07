@@ -28,13 +28,13 @@
     </v-app-bar>
 
     <v-content>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items :dark="darkMode" v-model="tab">
+        <v-tab-item>
+          <Resume/>
+        </v-tab-item>
         <v-tab-item>
           <Resume
             :darkMode="darkMode"/>
-        </v-tab-item>
-        <v-tab-item>
-          <Resume/>
         </v-tab-item>
         <v-tab-item>
           <Resume/>

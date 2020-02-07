@@ -1,5 +1,5 @@
 <template>
-  <v-card-text>
+  <v-card-text :class="{ dark: darkMode }">
     <v-container >
       <v-row no-gutters>
         <h3>About me</h3>
