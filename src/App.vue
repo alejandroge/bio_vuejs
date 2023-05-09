@@ -1,61 +1,85 @@
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <v-app>
-    <v-app-bar app :dark="darkMode">
-      <v-spacer></v-spacer>
-      <v-toolbar-title centered class="headline text-uppercase">
-        <span>Alejandro Guevara</span>
-        <span class="ml-5 font-weight-light">Web Developer</span>
-      </v-toolbar-title>
+  <header>
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-      <v-spacer></v-spacer>
-      <v-btn icon @click="darkMode = !darkMode">
-        <v-icon>mdi-theme-light-dark</v-icon>
-      </v-btn>
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
 
-      <template v-slot:extension>
-        <v-tabs
-          v-model="tab"
-          centered
-          >
-          <v-tab
-            v-for="item in items"
-            :key="item"
-            >
-            {{ item }}
-          </v-tab>
-        </v-tabs>
-      </template>
-    </v-app-bar>
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
 
-    <v-content>
-      <v-tabs-items :dark="darkMode" v-model="tab">
-        <v-tab-item>
-          <Resume/>
-        </v-tab-item>
-        <v-tab-item>
-          <Resume
-            :darkMode="darkMode"/>
-        </v-tab-item>
-        <v-tab-item>
-          <Resume/>
-        </v-tab-item>
-      </v-tabs-items>
-    </v-content>
-  </v-app>
+  <RouterView />
 </template>
 
-<script>
-import Resume from './components/Resume.vue'
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
 
-export default {
-  name: 'App',
-  components: {
-    Resume,
-  },
-  data: () => ({
-    darkMode: false,
-    tab: null,
-    items: ['Portfolio', 'Resume', 'Blog'],
-  }),
-};
-</script>
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
+
+  .logo {
+    margin: 0 2rem 0 0;
+  }
+
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
+  }
+}
+</style>
