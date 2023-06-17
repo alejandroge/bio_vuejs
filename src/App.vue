@@ -5,13 +5,12 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
+    <img alt="Profile Picture" class="logo" src="@/assets/profilePhoto.png" width="125" height="125" />
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/">Resume</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
@@ -29,6 +28,7 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+  border-radius: 50%;
 }
 
 nav {
