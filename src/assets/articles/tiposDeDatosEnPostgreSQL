@@ -1,0 +1,154 @@
+En este artículo vamos a revisar los tipos de datos principales que tenemos en disponibles en PostgreSQL, junto con ejemplos de su utilización para cada uno de ellos. Como siempre, la información oficial la puedes consultar directamente en la documentación.
+
+Para hacer este análisis vamos a agrupar los tipos en tres categorías las cuales son:
+
+Caracteres
+Números
+Fechas y Hora
+Tipos para caracteres
+En el caso de texto, tenemos 3 tipos de datos principales, los cuales son: char, varchar y text.
+
+char(n)
+Un columna de longitud fija, la cual es especificada por n. Un columna con un tipo por ejemplo char(20) utiliza 20 caracteres por columna independientemente si se están utilizando o no. Por ejemplo, “gato” ocupará 20 espacios de memoria.
+
+varchar(n)
+Un columna de longitud variable, donde la máxima longitud es especificada por n. A diferencia del tipo anterior, si se tiene una columna de este tipo, se utiliza solamente la longitud del dato que quiera ser guardado en ella. Por ejemplo, “gato” solo ocupara 4 espacios de memoria.
+
+Este tipo de dato, también puede ser definido sin n, de manera que tenga longitud ilimitada.
+
+text
+Una columna de longitud variable, donde no existe limitación para la longitud de esta. Aunque este tipo de dato, a diferencia de los anteriores, no es parte del estándar de SQL.
+
+A continuación, un ejemplo de como se definiría una columna con cada uno de los tipos que mencionamos previamente
+
+CREATE TABLE char_types (
+  type_char char(10),
+  type_varchar_lim varchar(10),
+  type_varchar_unlim varchar,
+  type_text text
+);
+Comparación tipos para caracteres
+Ahora, realizaremos una comparación de lo que sucedería con los distintos tipos de datos al insertar el mismo texto en diferentes columnas con el tipo.
+
+Dato	char(10)	varchar(10)	varchar	text
+'prueba'	'prueba '	'prueba'	'prueba'	'prueba'
+‘string mas larga’	Fuera de rango	Fuera de rango	‘string mas larga’	‘string mas larga’
+Comparación de tipos para caracteres
+Como podemos ver, char es el único tipo que guardaría espacios vacíos para completar los 10 espacios con los que fue definido. Para el resto de los tipos, no se aprecian muchas diferencias al usar valores pequeño para guardar en ellos.
+
+Una práctica común es evitar el uso del tipo char. Normalmente, se hace uso de varchar, y los casos donde se quiere limitar la longitud de un campo, se utiliza varchar(n) (por ejemplo cadenas de caracteres de longitud específica podría ser el número de placa de un automóvil).
+
+Tipos para números
+Para los números tenemos más opciones entre las cuales podemos elegir. Si alguna vez has programado en lenguajes como C, esta sección te será muy familiar. Para iniciar, PostgreSQL nos proporciona tipos para números enteros y números decimales.
+
+Números enteros
+Para números enteros, tenemos tres opciones: smallint, integer y bigint. La única diferencia que existe entre ellos, es el tamaño que ocupan memoria, causando que las columnas de distintos tipos de enteros, puedan o no, guardar determinados números.
+
+Para mostrar una comparativa fácil entre los tipos y sus rangos, presento la siguiente tabla:
+
+Tipo de dato	Tamaño en memoria	Rango
+smallint	2 bytes	-32768 a 32767
+integer	4 bytes	-2147483648 a 2147483647
+bigint	8 bytes	-92233720368554775808 a 92233720368554775807
+Comparación de tipos de datos para enteros
+Si se trata de insertar un número fuera del rango del tipo de la columna, PostgreSQL detendría la operación de inserción y nos regresaría un error mencionando que estamos fuera del rango.
+
+En este apartado, podemos encontrar columna de auto incremento, las cuales son una implementación propia de PostgreSQL, la cual es los seriales. Cada uno de los tipos que vimos anteriormente tiene si propio serial:
+
+smallint => smallserial
+integer => serial
+bigint => bigserial
+Estos auto incrementos, es muy común verlos siendo usados en columnas que corresponderán a una llave primaria de una tabla por ejemplo. Su funcionamiento, es muy similar a los tipos con los que están asociados, con la única diferencia es que al realizar un INSERT a una tabla con una columna de este tipo, no es necesario especificar el valor para dicha columna: este será asignado automáticamente.
+
+A continuación un ejemplo de como son usados en la definición de columnas
+
+CREATE TABLE integer_types (
+  column_1 smallint,
+  column_2 smallserial,
+  column_3 integer,
+  column_4 serial,
+  column_5 bigint,
+  column_6 bigserial,
+);
+Elegir entre el tipo de entero que vaya a ser utilizado depende del conocimiento que se tenga sobre los datos que se desee guardar en dicha columna. Si se sabe que los enteros que se van a almacenar, estarán dentro del rango del smallint, se da preferencia a este con el mejorar el manejo de memoria. Un ejemplo de esto podría ser una columna que almacenará la edad de una persona.
+
+Por otro lado, es común utilizar bigserial para todos las columnas que almacenarán un id, como podría ser llaves primarias y foráneas.
+
+Números decimales
+Para números decimales, tenemos menos fundamentalmente dos representaciones que son implementadas en PostgreSQL.
+
+Número de Punto Fijo
+Números de Punto flotante
+Para entender estos dos tipos es necesario entender la diferencia entre estos dos tipos de números.
+
+Los tipos de punto fijo, son almacenados junto con la información de la precisión y escala que utilizarán. Este tipo de número, tiene en PostgreSQL un tamaño variable, ya que este depende de la precisión y la escala. Estos números utilizan los tipos numeric o decimal, que pueden ser considerados como el mismo.
+
+Los números de Punto flotante, por el contrario no permiten configurar la precisión y la escala, pero tienen un tamaño constante, y un rango de valores que pueden representar. Existen dos tipos para estos números los cuales son real y double (estos tipos son muy similares al funcionamiento que tendrían float y double en lenguaje C).
+
+La principal diferencia entre los números de punto fijo y los de punto flotante es la precisión de estos, y el rango de valores que pueden representar. En la siguiente tabla, podemos hacer una comparación entre los distintos tipos.
+
+Comparación tipos para números decimales
+Tipo de dato	Tamaño en memoria	Rango
+numeric, decimal	variable	hasta 131072 dígitos antes del punto; hasta 16383 dígitos después del punto
+real	4 bytes	6 dígitos decimales de precisión
+double	8 bytes	15 dígitos decimales de precisión
+Comparación de tipos de datos para decimales
+Ahora bien, ¿cómo elegir que tipo de datos utilizar para decimales? Pues como todo en la vida depende. Si el objetivo del valor que será en la almacenado en la columna es el de realizar operaciones con este, y se espera que los resultados sean exactos, siempre es mejor utilizar los tipos numeric o decimal.
+
+La razón, es que los tipos guardados como datos de punto flotante tiene limitaciones en la precisión, debido a lo cuál tienen a tener una cantidad de error en los cálculos que se realizan con estos. Analizaremos el porqué en un nuevo artículo posteriormente.
+
+A continuación, puedes ver un ejemplo de como pueden ser usados en la definición de las columnas
+
+CREATE TABLE decimal_types (
+  column_1 numeric(5, 2),
+  column_2 numeric(5),
+  column_3 numeric,
+  column_4 real,
+  column_5 double
+);
+Ahora bien, para los valores de precision y scale en la definición del tipo numeric, se tienen un par extra de posibilidades. La diferencia entre ellas, son los valores asignados por defecto estos. Cuando scale no ha sido especificado (p.e. numeric(5)), este es considerado como 0, por lo tanto la parte decimal es ignorada. Cuando precision tampoco es especificado, (p.e. numeric), scale permanece siendo 0, y precision se considera el máximo valor posible, el cual es 131072.
+
+Para observar rápidamente las diferencias, en la siguiente tabla podrás observar como sería conservado un dato en los diferentes columnas.
+
+Valor	numeric(5,2)	numeric(5)	numeric
+300.279	300.28	300	300
+30,000	Fuera de rango	30,000	30,000
+300,000	Fuera de rango	Fuera de rango	300,000
+Comparación entre las definición del tipo numeric
+Tipos para fecha y hora
+Para las fechas, tenemos varios tipos interesantes que analizaremos ahora, aunque algunos de ellos los podemos considerar como parte del tipo anterior.
+
+Las opciones que tenemos son
+
+timestamp: que es fecha y hora, y el cuál puede incluir la zona horaria.
+date: solamente la fecha
+time: solamente la hora, y puede incluir la zona horaria
+interval: el cual puede guardar un intervalo de tiempo en días, horas, años, etc.
+Un hecho a considerar, para el formato de fechas, es que es recomendable el utilizar el formato ISO, el cual es YYYY-MM-DD HH:MM:SS, aunque PostgreSQL soporta otro tipo de formatos, al hacer un query que incluya la información de estas columnas, por defecto será mostrado en el formato recomendado.
+
+Comparación tipos de fecha y hora
+A continuación podemos observar una comparativa entre los tamaños y los rangos que permiten los diferentes tipos
+
+Tipo de dato	Tamaño en memoria	Rango
+timestamp	8 bytes	4713 BC a 294276 AD
+date	4 bytes	4713 BC a 5874891 AD
+time	8 bytes	00:00:00 a 24:00:00
+interval	16 bytes	+/- 178,000,000 años
+Comparativa entre tipos para fecha y hora
+El tipo intervalo no es muy común verlo usado como un tipo de una columna, como si lo es timestamp por ejemplo, pero cada vez que se realiza una operación entre fechas o horas, el resultado de dicha operación será del tipo interval.
+
+Y como con los grupos anteriores, a continuación puedes ver pequeño ejemplo de como podrían ser usados durante la definición de una tabla.
+
+CREATE TABLE time_and_hour_types (
+  column_1 timestamp,
+  column_2 timestamp with time zone,
+  column_3 date,
+  column_4 time,
+  column_5 time with time zone,
+  column_6 interval
+);
+El uso de las zonas horarias, será cubierto en mayor detalle en un artículo posterior ya que existen múltiples formatos en los que se pueden registrar, similar a los múltiplos formatos disponibles para las fechas.
+
+2003-04-12 04:05:06 America/New_York
+04:05:06 PST
+Y bueno, finalmente hemos llegado a la conclusión de este artículo. Como se mencionó a lo largo del mismo, siempre es importante analizar los datos que se desean guardar con detenimiento antes de definir la tabla que se usará para ellos, sobre todo en aplicaciones dónde se espera guardar muchas filas por tabla, ya que puede ser complicado cambiar el tipo de la columna, una vez que esta está llena de información.
