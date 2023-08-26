@@ -1,28 +1,53 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import {computed} from "vue";
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
+const router = useRouter()
+
+const isArticlesRoute = computed(() => {
+  return router.currentRoute.value.name == 'articles';
+});
+
 </script>
 
 <template>
-  <header>
+  <header :class="isArticlesRoute ? 'sidebar-mode' : ''">
     <img alt="Profile Picture" class="logo" src="@/assets/profilePhoto.png" width="125" height="125" />
     <div class="wrapper">
       <HelloWorld />
 
       <nav>
         <RouterLink to="/">Resume</RouterLink>
-        <!-- <RouterLink to="/about">About</RouterLink> -->
+        <RouterLink to="/articles">Articles</RouterLink>
       </nav>
     </div>
   </header>
 
-  <RouterView />
+  <RouterView :class="isArticlesRoute ? 'extended-mode' : ''" />
 </template>
 
 <style scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+header.sidebar-mode {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+main {
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+main.extended-mode {
+  grid-column-start: 2;
+  grid-column-end: 5;
 }
 
 .logo {

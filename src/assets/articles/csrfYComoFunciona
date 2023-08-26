@@ -1,0 +1,37 @@
+Posted on May 24th, 2020
+En este artículo, revisaremos qué es un ataque CSRF y un ejemplo de cómo se realiza.
+
+CSRF (por sus siglas en inglés Cross-Site Request Forgery) es un tipo de ataque malicioso en un sitio web, dónde ciertas acciones no autorizadas son ejecutadas en nombre del usuario, ya autenticado, sin que este se de cuenta. Debido a qué el usuario tiene una sesión activa, la aplicación no tiene manera de diferenciar entre una petición maliciosa y una real.
+
+Contrario a un ataque XSS, dónde el atacante se aprovecha de la confianza que un usuario tiene en una determinada página, un ataque CSRF se aprovecha de la confianza que una aplicación tiene en un usuario autenticado en su sistema.
+
+¿Por qué es posible esto?
+Todo esto es posible por el uso de cookies de identificación de usuario. Cuando un usuario se autentica en una aplicación Web, esta guarda cierta información en lo que se conoce como sesión. Para mantener la conexión activa con el usuario, el id de dicha sesión es guardado en el navegador. Esto se conoce como una cookie de identificación.
+
+Ahora bien, por defecto el navegador enviará dicha cookie en las peticiones que se hagan al dominio donde el usuario tiene activa su sesión, provocando aquí el problema.
+
+Si el servidor recibe una petición mal intencionada, como habíamos dicho, no hay una manera de diferenciarla de una petición real hecha por un usuario, ya que incluirá el cookie de identificación e incluso proviene también de la dirección IP correcta.
+
+Las aplicaciones que realizan acciones basadas en el input del usuario sin requerir una confirmación son especialmente vulnerables a este tipo de ataque.
+
+¿Cómo se realiza?
+Algunas de las maneras en que este ataque es realizado son:
+
+Imágenes creadas de una manera especial
+Formularios ocultos
+Peticiones del tipo XMLHttpRequests en un Javascript
+Básicamente un usuario es engañado por un atacante para realizar una petición Web que el no deseaba. Esto puede ser logrado incluso sin la intervención directa de la victima. Algunas de las acciones que se pueden ocasionar con una ataque así son:
+
+Filtraciones de información
+Cambios en el estado de la sesión del usuario.
+Manipulación de la cuenta del usuario como cambio de contraseña o correo, compras no deseadas o eliminación de cuentas.
+Ejemplo
+Imaginemos que un atacante tiene conocimiento de un vulnerabilidad de este tipo en un servicio popular de transferencia de dinero.
+
+Este individuo podría crear una página web que contiene un formulario oculto que ejecutaría una transferencia de fondos a una cuenta bajo su control. El formulario está hecho de manera que no es visible por el usuario, y un script lo ejecuta cuando la página termina de cargar.
+
+Podemos seguir imaginando, que dicha página contiene información sobre cierto juego popular o una película o artista, lo cuál le daría la facilidad al atacante de colocar un enlace a su página, en un foro sobre dicho tema.
+
+Ahora bien, si un usuario con una sesión abierta en el servicio de transferencias abre la página controlada por el atacante, se realizará la transferencia que fue escondida en el formulario, todo esto de manera inadvertida. El servicio de transferencias, no sería capaz bloquear dicha transacción ya que en el sistema parecerá una petición real de su usuario. Tiene su sesión e incluso viene de su dirección IP.
+
+Como se puede observar, es un tipo de ataque bastante peligroso. Afortunadamente, existen maneras de evitar ser vulnerables a CSRF. Ruby on Rails incluye una de dichas estrategias por defecto en sus aplicaciones, sobre la cual hablaremos en el siguiente artículo.

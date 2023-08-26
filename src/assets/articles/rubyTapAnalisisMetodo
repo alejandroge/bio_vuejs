@@ -1,0 +1,47 @@
+Posted May 17th, 2020
+En este artículo, podrás ver un análisis sobre el método tap en Ruby, ejemplos de su uso, y su definición.
+
+tap es uno de esos métodos que no son utilizados tan a menudo. En la documentación se menciona que su objetivo principal es el de ganar acceso a las variables durante el encadenamiento de métodos. Lo anterior lo hace especialmente útil para debuggear dichos encadenamientos.
+
+Ejemplos de uso
+A continuación, te presento un par de ejemplos de uso. Estos son los que he utilizado personalmente y la razón por la cual me gusta mucho el método. El primero de ellos, es para un problema común donde se necesita hacer varias transformaciones en un arreglo de datos.
+
+(1..9).
+  select(&:odd?).
+  reject { |n| n > 5 }.
+  sum
+# => 9
+Digamos no estamos obteniendo lo que esperamos al final del encadenamiento, tap podría ayudarnos a encontrar en que punto de este está ocurriendo el bug, sin tener que modificar mucho nuestro código, simplemente agregando llamadas de tap en el punto que nos gustaría investigar.
+
+(1..9).
+  tap { |x| p x.to_a }. # => [1 , 2, 3, 4, 5, 6, 7, 8, 9]
+  select(&:odd?).
+  tap { |x| p x }.      # => [1, 3, 5, 7, 9]
+  reject { |n| n > 5 }.
+  tap { |x| p x }.      # => [1, 3, 5]
+  sum
+# => 9
+De esta manera podemos echar un vistazo a como se van cambiando nuestros datos sin tener que cambiar la estructura del encadenamiento. Si queremos obtener el mismo resultado sin usar tap tendríamos que:
+
+Guardar cada paso intermedio en una variable
+Imprimir o cualquiera que sea tu método de debuggeo
+Finalmente llamar el siguiente método de la variable
+Lo cuál no suena tan mal, pero debemos considerar que una vez que se resuelva el problema que se busca debuggear, hay que devolver el código al estado inicial.
+
+Ahora bien tap no es solamente útil para debuggear, sino que también puede ser utilizado como parte del código de nuestro programa.
+
+El segundo ejemplo de uso se da al momento de crear nuevos objetos. Imagina que para crear un objeto, se requiere de algunos pasos para su inicialización. tap proporciona una excelente opción para mantener dichos pasos organizados dentro de un bloque. Por ejemplo:
+
+person = People.tap do |p|
+  p.name = 'Alex'
+  p.last_name = 'Guevara'
+  p.greet # => "Hello I'm Alejandro"
+end
+Definición
+Para entender un poco más el funcionamiento que observamos, nos basta con mirar la definición del método. De la documentación de Rails, sabemos que:
+
+def tap
+  yield self
+  self
+end
+Así podemos observar que se trata de hecho de un método bastante simple, pero no por eso menos útil. Otra cosa interesante que podemos sacar de esto, es un poco de historia. tap aparece por primera vez en la versión 2.3.2 de Rails, para ser incluido después en Ruby core para su versión v1_8_7_72.
