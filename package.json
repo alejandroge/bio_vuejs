@@ -12,10 +12,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "axios": "^1.5.1",
     "highlight.js": "^11.8.0",
     "markdown-it": "^13.0.1",
     "pinia": "^2.0.35",
-    "vite-raw-plugin": "^1.0.2",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

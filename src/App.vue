@@ -12,7 +12,7 @@ const isArticlesRoute = computed(() => {
 </script>
 
 <template>
-  <header :class="isArticlesRoute ? 'sidebar-mode' : ''">
+  <header :class="isArticlesRoute ? 'article-mode' : ''">
     <img alt="Profile Picture" class="logo" src="@/assets/profilePhoto.png" width="125" height="125" />
     <div class="wrapper">
       <HelloWorld />
@@ -35,7 +35,7 @@ header {
   grid-column-end: 3;
 }
 
-header.sidebar-mode {
+header.article-mode {
   grid-column-start: 1;
   grid-column-end: 2;
 }

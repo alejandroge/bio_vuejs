@@ -2,42 +2,45 @@
   <div class="article" v-html="articleRawHtml"></div>
 </template>
 
-<script lang="ts">
-import article from '@/assets/articles/rubyTapMethodAnalysis.md';
-
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import axios from 'axios';
 import hljs from 'highlight.js/lib/core';
 import ruby from 'highlight.js/lib/languages/ruby';
+import MarkdownIt from 'markdown-it';
 
 hljs.registerLanguage('ruby', ruby);
 
-import MarkdownIt from 'markdown-it';
-
-export default {
-  data() {
-    return {
-      article,
-      md: new MarkdownIt({
-        html: true,
-        linkify: true,
-        typographer: true,
-        highlight: function (str: string, lang: string) {
-          if (lang && hljs.getLanguage(lang)) {
-            try {
-              return hljs.highlight(str, { language: lang }).value;
-            } catch (__) {}
-          }
-
-          return ''; // use external default escaping
-        }
-      }),
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+  highlight: function (str: string, lang: string) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(str, { language: lang }).value;
+      } catch (__) { }
     }
-  },
-  computed: {
-    articleRawHtml() { 
-      return this.md.render(article);
-    }
+
+    return ''; // use external default escaping
   }
+})
+
+const articleText = ref('');
+const props = defineProps({
+  articleName: String
+})
+const articleRawHtml = computed(() => {
+  return md.render(articleText.value);
+});
+
+const articlesBasePath = './articles/';
+const axiosArticle = async () => {
+  axios.get(`${articlesBasePath}${props.articleName}`)
+    .then(response => articleText.value = response.data);
 }
+
+axiosArticle();
 </script>
 
 <style lang="scss">

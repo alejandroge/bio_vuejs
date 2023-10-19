@@ -4,6 +4,6 @@ import Article from '../components/Article.vue'
 
 <template>
   <main>
-    <Article />
+    <Article article-name="rubyTapMethodAnalysis.md" />
   </main>
 </template>
