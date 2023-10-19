@@ -34,9 +34,9 @@ const articleRawHtml = computed(() => {
   return md.render(articleText.value);
 });
 
-const articlesBasePath = './articles/';
+const articlesBasePath = './articles_files/';
 const axiosArticle = async () => {
-  axios.get(`${articlesBasePath}${props.articleName}`)
+  axios.get(`${articlesBasePath}${props.articleName}.md`)
     .then(response => articleText.value = response.data);
 }
 
