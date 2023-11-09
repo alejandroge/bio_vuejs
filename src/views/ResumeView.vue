@@ -7,3 +7,13 @@ import Resume from '../components/Resume.vue'
     <Resume />
   </main>
 </template>
+
+<style scoped>
+aside {
+  grid-area: sidebar;
+}
+
+main {
+  grid-area: main;
+}
+</style>
