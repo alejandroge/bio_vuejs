@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {computed} from "vue";
 import { RouterLink, RouterView, useRouter } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 
 const router = useRouter()
 
@@ -12,42 +11,84 @@ const isArticlesRoute = computed(() => {
 </script>
 
 <template>
-  <header :class="isArticlesRoute ? 'article-mode' : ''">
-    <img alt="Profile Picture" class="logo" src="@/assets/profilePhoto.png" width="125" height="125" />
-    <div class="wrapper">
-      <HelloWorld />
+  <div id="main-app-container" :class="isArticlesRoute ? 'article-mode' : 'resume-mode'">
+    <header :class="isArticlesRoute ? 'article-mode' : ''">
+      <img alt="Profile Picture" class="logo" src="@/assets/profilePhoto.png" width="125" height="125" />
+      <div class="wrapper">
+        <div class="greetings">
+          <h1 class="green">Alejandro Guevara</h1>
+          <h2 class="green">Software Engineer</h2>
+        </div>
 
-      <nav>
-        <RouterLink to="/">Resume</RouterLink>
-        <RouterLink to="/articles">Articles</RouterLink>
-      </nav>
-    </div>
-  </header>
+        <nav>
+          <RouterLink to="/">Resume</RouterLink>
+          <RouterLink to="/articles">Articles</RouterLink>
+        </nav>
+      </div>
+    </header>
 
-  <RouterView :class="isArticlesRoute ? 'extended-mode' : ''" />
+    <RouterView :class="isArticlesRoute ? 'article-mode' : ''" />
+  </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@media (min-width: 1024px) {
+  #main-app-container.resume-mode {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: 
+    "header main";
+
+    padding: 0 2rem;
+
+    header {
+      grid-area: header;
+    }
+  }
+}
+
+#main-app-container.article-mode {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-areas: 
+  "header header header header"
+  "sidebar article article article";
+
+  header {
+    justify-content: center;
+
+    img {
+      border-radius: 50%;
+
+      max-width: 75px;
+      max-height: 75px;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .greetings {
+        h1 {
+          top: 10px;
+        }
+      }
+
+      nav {
+        margin-top: 0px;
+      }
+    }
+  }
+}
+
+#main-app-container {
+  padding: 0 2rem;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-
-header.article-mode {
-  grid-column-start: 1;
-  grid-column-end: 2;
-}
-
-main {
-  grid-column-start: 3;
-  grid-column-end: 5;
-}
-
-main.extended-mode {
-  grid-column-start: 2;
-  grid-column-end: 5;
+  grid-area: header;
 }
 
 .logo {
@@ -84,18 +125,12 @@ nav a:first-of-type {
 @media (min-width: 1024px) {
   header {
     display: flex;
-    place-items: center;
+    align-items: center;
     padding-right: calc(var(--section-gap) / 2);
   }
 
   .logo {
     margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
   }
 
   nav {
@@ -105,6 +140,28 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 2.6rem;
+  top: -10px;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+.greetings h1,
+.greetings h3 {
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .greetings h1,
+  .greetings h3 {
+    text-align: left;
   }
 }
 </style>

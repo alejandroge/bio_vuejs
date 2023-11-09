@@ -1,10 +1,10 @@
 <template>
-  <div class="article" v-html="articleRawHtml"></div>
+  <div class="markdown-article" v-html="articleRawHtml"></div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import axios from 'axios';
+import { computed, toRefs } from 'vue';
+
 import hljs from 'highlight.js/lib/core';
 import ruby from 'highlight.js/lib/languages/ruby';
 import MarkdownIt from 'markdown-it';
@@ -26,27 +26,27 @@ const md = new MarkdownIt({
   }
 })
 
-const articleText = ref('');
-const props = defineProps({
-  articleName: String
-})
+export interface Props {
+  articleText: string
+}
+const props = withDefaults(
+  defineProps<Props>(),
+  {
+    articleText: ''
+  }
+)
+
+const { articleText } = toRefs(props);
+
 const articleRawHtml = computed(() => {
   return md.render(articleText.value);
 });
-
-const articlesBasePath = './articles/';
-const axiosArticle = async () => {
-  axios.get(`${articlesBasePath}${props.articleName}`)
-    .then(response => articleText.value = response.data);
-}
-
-axiosArticle();
 </script>
 
 <style lang="scss">
 @import 'highlight.js/styles/default.css';
 
-.article {
+.markdown-article {
   // all styles comming from
   // https://github.com/markdowncss/air/blob/master/css/air.css
   @media print {
@@ -257,14 +257,9 @@ axiosArticle();
     display: flex;
     align-items: center;
   }
-
-  .article {
-    overflow-y: auto;
-  }
 }
 
-.article {
-  max-height: 100vh;
+.markdown-article {
   padding-right: 20px;
 
   :deep(h1), :deep(h2), :deep(h3), :deep(h4), :deep(h5), :deep(h6) {

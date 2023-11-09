@@ -1,5 +1,6 @@
-## Ruby "tap" method analysis
+# Ruby "tap" method analysis
 ###### Published on July 12, 2020
+---
 
 In this article, you will read an analysis of Ruby’s tap method, some examples of its use and it’s code.
 
