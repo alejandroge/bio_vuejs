@@ -1,3 +1,38 @@
+<template>
+  <div class="container mt-2">
+    <div class="columns">
+      <div class="column is-four-fifths">
+        <Article v-if="!loading" :article-text="selectedArticleText" />
+      </div>
+      <div class="column">
+        <aside class="menu">
+          <template
+              v-for="section, sectionIndex in sidebarSections"
+              :key="`menu-section-${sectionIndex}`"
+          >
+            <p class="menu-label">{{ section.title }}</p>
+            <ul class="menu-list">
+              <li
+                  v-for="article, articleIndex in section.articles"
+                  :key="`article-${sectionIndex}-${articleIndex}`"
+              >
+                <a
+                  :key="articleIndex"
+                  @click="selectArticle(article)"
+                >
+                  <p class="article-title">{{ article.title }}</p>
+                  <p class="article-published-at">{{ article.published }}</p>
+                </a>
+              </li>
+            </ul>
+          </template>
+        </aside>
+      </div>
+    </div>
+
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 
@@ -40,7 +75,7 @@ const sidebarSections: Section[] = [
     articles: articles.filter(article => article.lang == 'en'),
   },
   {
-    title: 'Articulos en Español',
+    title: 'Artículos en Español',
     articles: articles.filter(article => article.lang == 'es'),
   }
 ]
@@ -74,63 +109,3 @@ const spanishArticles = computed(() => {
 
 fetchArticle(selectedArticle.value);
 </script>
-
-<template>
-  <aside>
-    <div
-        v-for="section, sectionIndex in sidebarSections"
-        :key="sectionIndex"
-        class="aside-section"
-    >
-      <p class="section-title">{{ section.title }}</p>
-
-      <a
-        v-for="(article, articleIndex) in section.articles"
-        :key="articleIndex"
-        class="article-navigation-link"
-        @click="selectArticle(article)"
-      >
-        <p class="article-title">{{ article.title }}</p>
-        <p class="article-published-at">{{ article.published }}</p>
-      </a>
-    </div>
-  </aside>
-
-  <main>
-    <Article v-if="!loading" :article-text="selectedArticleText" />
-  </main>
-</template>
-
-<style scoped lang="scss">
-aside {
-  grid-area: sidebar;
-  color: hsla(160, 100%, 37%, 1);
-  margin: 1.414rem 0 .5rem;
-
-  .aside-section {
-    margin-bottom: 20px;
-
-    .section-title {
-      font-size: 1.3rem;
-    }
-
-    .article-navigation-link {
-      cursor: pointer;
-
-      .article-title {
-        font-size: 1.1rem;
-        filter: brightness(60%);
-      }
-
-      .article-published-at {
-        font-size: 0.8rem;
-      }
-    }
-  }
-}
-
-main {
-  grid-area: article;
-}
-
-</style>
