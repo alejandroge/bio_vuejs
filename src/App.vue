@@ -8,13 +8,13 @@
           </figure>
         </RouterLink>
 
-        <a 
+        <a
           :class="{ 'navbar-burger': true, 'is-active': menuExpanded }"
           role="button"
           aria-label="menu"
           aria-expanded="false"
           @click="menuExpanded = !menuExpanded"
-          >
+        >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -35,17 +35,15 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <script lang="ts">
-import { computed } from "vue";
-
 export default {
   data(): { menuExpanded: boolean } {
     return {
-      menuExpanded: false,
-    };
-  },
+      menuExpanded: false
+    }
+  }
 }
 </script>
