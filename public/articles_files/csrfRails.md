@@ -394,6 +394,6 @@ def valid_per_form_csrf_token?(token, session)
 end
 ```
 
-Un aspecto interesante a comentar sobre estos métodos, es la utilización del método ActiveSupport::SecurityUtils.fixed_length_secure_compare el cual hace una comparación entre dos Strings. La única diferencia con una comparación normal es que este método recorre la longitud completa de estas siempre, aún cuando ambas sean completamente diferentes. Esto asegura que no pueda utilizarse el tiempo en que se tarda en responder la función con fines de encontrar el token con un algoritmo que tome este en cuenta.
+Un aspecto interesante a comentar sobre estos métodos, es la utilización del método `fixed_length_secure_compare` el cual hace una comparación entre dos Strings. La única diferencia con una comparación normal es que este método recorre la longitud completa de estas siempre, aún cuando ambas sean completamente diferentes. Esto asegura que no pueda utilizarse el tiempo en que se tarda en responder la función con fines de encontrar el token con un algoritmo que tome este en cuenta.
 
 Y así llegamos al final de este análisis, y también al final del análisis de qué es Cross Site Request Forgery. En el siguiente artículo, tomaremos una ruta un poco distinta y analizaremos los tipos de datos usados en PostgreSQL, y ejemplos de su utilización.
