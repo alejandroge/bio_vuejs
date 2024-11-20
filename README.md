@@ -30,8 +30,4 @@ npm run lint
 
 ### Deploy to aguevara.me
 
-Simply build this project here, and copy the `dist/` contents to the repo: https://github.com/alejandroge/bio_vuejs_deployment
-
-If I wanted to get fancy I could potentially automate this. First idea:
-
-- Simply create a bash script that I can call, that does the building and copying. If I run this locally, then I don't need to do anything fancy either for creating a new commit and pushing it to the repo.
+This repo auto deploys to Github Pages on merge to the main branch, which is then pointed to `aguevara.me` domain
