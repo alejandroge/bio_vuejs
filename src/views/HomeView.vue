@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import Resume from '../components/Resume.vue'
-</script>
-
 <template>
   <div class="container mt-2">
     <div class="hero is-fullheight-with-navbar">

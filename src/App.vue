@@ -24,8 +24,8 @@
 
       <div :class="{ 'navbar-menu': true, 'is-active': menuExpanded }">
         <div class="navbar-start">
-          <RouterLink class="navbar-item" to="/articles">Articles</RouterLink>
           <RouterLink class="navbar-item" to="/projects">Projects</RouterLink>
+          <RouterLink class="navbar-item" to="/articles">Articles</RouterLink>
         </div>
       </div>
     </div>
