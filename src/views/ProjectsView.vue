@@ -53,7 +53,7 @@ type ProjectType = {
 const projects: ProjectType[] = [
   {
     title: 'My personal website',
-    imageFilePath: 'src/assets/projects/bio-4by3.png',
+    imageFilePath: './projects_images/bio-4by3.png',
     lang: 'en',
     webpageLink: 'https://aguevara.me/',
     githubLink: 'https://github.com/alejandroge/bio_vuejs',
@@ -64,7 +64,7 @@ const projects: ProjectType[] = [
   },
   {
     title: 'Browser mini video game',
-    imageFilePath: 'src/assets/projects/ritchie-4by3.png',
+    imageFilePath: './projects_images/ritchie-4by3.png',
     lang: 'en',
     webpageLink: 'https://alejandroge.github.io/ritchie/',
     githubLink: 'https://github.com/alejandroge/ritchie',
@@ -75,7 +75,7 @@ const projects: ProjectType[] = [
   },
   {
     title: 'A generic company website',
-    imageFilePath: 'src/assets/projects/company-4by3.png',
+    imageFilePath: './projects_images/company-4by3.png',
     lang: 'en',
     webpageLink: 'https://alejandroge.github.io/companystd/',
     githubLink: 'https://github.com/alejandroge/companystd',
