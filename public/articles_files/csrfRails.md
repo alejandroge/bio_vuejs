@@ -1,5 +1,3 @@
-# CSRF en Rails
-###### Publicado el 3 de Julio de 2020
 ---
 
 En este artículo, vamos a revisar como la protección contra CSRF es implementada en Rails. Si necesitas un repaso rápido sobre que es CSRF, escribí un artículo al respecto, y lo puedes leer aquí.

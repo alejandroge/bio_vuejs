@@ -2,6 +2,12 @@
   <div class="container mt-2">
     <div class="columns">
       <div class="column is-four-fifths">
+        <section class="hero is-small">
+          <div class="hero-body">
+            <p class="title">{{ selectedArticle.title }}</p>
+            <p class="subtitle">{{ selectedArticle.published }}</p>
+          </div>
+        </section>
         <Article v-if="!loading" :article-text="selectedArticleText" />
       </div>
       <div class="column">
