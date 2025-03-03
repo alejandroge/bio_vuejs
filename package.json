@@ -23,7 +23,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@tsconfig/node18": "^2.0.0",
-    "@types/node": "^18.16.3",
+    "@types/node": "^18.19.79",
     "@vitejs/plugin-vue": "^4.2.1",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "@vue/eslint-config-prettier": "^7.1.0",
@@ -34,8 +34,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
     "sass": "^1.66.1",
-    "typescript": "~5.0.4",
+    "typescript": "^5.8.2",
     "vite": "^5.4.0",
-    "vue-tsc": "^1.6.4"
+    "vue-tsc": "^2.2.8"
   }
 }
