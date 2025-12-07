@@ -3,6 +3,12 @@
     <div class="hero is-fullheight-with-navbar">
       <div class="hero-body">
         <div class="block">
+          <div class="block">
+            <figure class="image is-128x128">
+              <img class="is-rounded" src="/src/assets/me.avatar.png" />
+            </figure>
+          </div>
+
           <div class="title">Hi! I'm Alejandro,</div>
           <div class="block is-size-4">
             <p>
