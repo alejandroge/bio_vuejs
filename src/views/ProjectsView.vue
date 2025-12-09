@@ -51,13 +51,23 @@ type ProjectType = {
 
 const projects: ProjectType[] = [
   {
+    title: 'GlabToggl spoon',
+    imageFilePath: './projects_images/GlabTogglSpoon-4by3.png',
+    lang: 'en',
+    githubLink: 'https://github.com/alejandroge/GlabToggl.spoon',
+    paragraphs: [
+      'A Hammerspoon spoon that integrates Gitlab and Toggl Track. It allows you to start/stop Toggl timers from Gitlab issues assigned to you.',
+      'The project is written in Lua, and uses the Hammerspoon UI (only available for MacOS).'
+    ]
+  },
+  {
     title: 'Internet monitor',
     imageFilePath: './projects_images/internetMonitor-4by3.png',
     lang: 'en',
     githubLink: 'https://github.com/alejandroge/internet-monitor',
     paragraphs: [
-      'A simple monitor for disconnections. A minimal web pages shows the recent logs',
-      'A Ruby script analyzes the results of a ping command. A minimal Go api exposes the information to a VueJS frontend.'
+      'A disconnections monitor. A minimal web page that shows the recent logs and your local network.',
+      'It is a Ruby script that analyzes the results of the ping command, executed by a cron task. A minimal Go api exposes the information to a VueJS frontend.'
     ]
   },
   {
@@ -67,8 +77,8 @@ const projects: ProjectType[] = [
     webpageLink: 'https://aguevara.me/',
     githubLink: 'https://github.com/alejandroge/bio_vuejs',
     paragraphs: [
-      'This website that you are on! I use it as my public portfolio to display short articles that I wrote, and some of my side projects',
-      'I used VueJS and BulmaCSS. Project auto deploys to Github pages using Github Actions.'
+      'My public portfolio to display with short articles and my side projects (The website that you are on right now!).',
+      'I used VueJS and BulmaCSS. The project auto deploys to Github pages using Github Actions.'
     ]
   },
   {
@@ -78,7 +88,7 @@ const projects: ProjectType[] = [
     webpageLink: 'https://alejandroge.github.io/ritchie/',
     githubLink: 'https://github.com/alejandroge/ritchie',
     paragraphs: [
-      'A small video game, that runs entirely on the browser. I build the graphics for it (from which you can see, that I am no designer), and a few levels.',
+      'A small video game, that runs entirely on the browser. I designed the graphics for it (from which you can see, that I am no designer), and three different levels.',
       'The project is written only with Javascript, using KineticJS library.'
     ]
   },
@@ -89,8 +99,8 @@ const projects: ProjectType[] = [
     webpageLink: 'https://alejandroge.github.io/companystd/',
     githubLink: 'https://github.com/alejandroge/companystd',
     paragraphs: [
-      'A generic company webpage that I designed a far back. It mostly features a couple different sections, and forms',
-      'There is no functionality on the webpage, so is mostly just HTML and CSS.'
+      'A generic company webpage that I designed a few years back. It mostly features a couple different sections, and forms',
+      'There is no functionality on the webpage, it is just HTML and CSS.'
     ]
   }
 ]
